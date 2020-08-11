@@ -17,8 +17,18 @@ app.use(express.json());
 
 app.get("/api/questions", async (req, res) => {
   try {
-    const questions = await db.select().table("faqs");
-    res.json(questions);
+    if (!req.query.keyword) {
+      const questions = await db.select().table("faqs");
+      res.json(questions);
+    } else {
+      const keyword = req.query.keyword;
+      console.log("this is", keyword);
+      const questions = await db
+        .where("question", "like", `%${keyword}%`)
+        .select()
+        .table("faqs");
+      res.json(questions);
+    }
   } catch (err) {
     console.error("Error loading questions!", err);
     res.sendStatus(500);
@@ -28,6 +38,7 @@ app.get("/api/questions", async (req, res) => {
 app.get("/api/questions/:id", async (req, res) => {
   try {
     const id = req.params.id;
+    console.log(id);
     const questions = await db
       .where("id", id)
       .select()
@@ -39,13 +50,15 @@ app.get("/api/questions/:id", async (req, res) => {
   }
 });
 
-// app.get("/api/questions?keyword=:keyword", async (req, res) => {
+// app.get("/api/questions", async (req, res) => {
 //   try {
-//     const keyword = req.params.keyword;
-//     await db
-//       .where("")
+//     const keyword = req.query.keyword;
+//     console.log("this is", keyword);
+//     const questions = await db
+//       .where("question", "like", `%${keyword}%`)
 //       .select()
 //       .table("faqs");
+//     res.json(questions);
 //   } catch (err) {
 //     console.error("Error loading questions!", err);
 //     res.sendStatus(500);

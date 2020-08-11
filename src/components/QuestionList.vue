@@ -42,7 +42,7 @@
           {{ currentQuestion.solved ? "Solved" : "Unsolved" }}
         </div>
 
-        <a class="badge badge-warning" :href="'/questions/' + currentQuestion.id">Edit</a>
+        <a class="btn btn-outline-warning" :href="'/questions/' + currentQuestion.id">Edit</a>
       </div>
       <div v-else>
         <br />
@@ -86,7 +86,7 @@ export default {
       DataService.findByKeyword(this.keyword)
         .then((response) => {
           this.questions = response;
-          console.log(response);
+          console.log("is this", response);
         })
         .catch((e) => {
           console.log(e);

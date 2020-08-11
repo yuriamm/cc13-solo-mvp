@@ -1,6 +1,6 @@
 <template>
   <div v-if="currentQuestion" class="edit-form">
-    <h4>question</h4>
+    <h4>Question</h4>
     <form>
       <div class="form-group">
         <label for="question">Question</label>
@@ -20,15 +20,15 @@
     </form>
 
     <button
-      class="badge badge-primary mr-2"
+      class="btn btn-outline-primary mr-4"
       v-if="currentQuestion.solved"
       @click="updateSolved(false)"
     >UnSolved</button>
-    <button v-else class="badge badge-primary mr-2" @click="updateSolved(true)">Solved?</button>
+    <button v-else class="btn btn-outline-primary mr-4" @click="updateSolved(true)">Solved?</button>
 
-    <button class="badge badge-danger mr-2" @click="deleteQuestion">Delete</button>
+    <button class="btn btn-outline-danger mr-4" @click="deleteQuestion">Delete</button>
 
-    <button type="submit" class="badge badge-success" @click="update">Update</button>
+    <button type="submit" class="btn btn-outline-success" @click="update">Update</button>
     <p>{{ message }}</p>
   </div>
 
@@ -50,10 +50,10 @@ export default {
     };
   },
   methods: {
-    getquestion(id) {
+    getQuestion(id) {
       DataService.get(id)
         .then((response) => {
-          console.log(this.$route);
+          console.log(response);
           this.currentQuestion = response[0];
         })
         .catch((e) => {
@@ -105,7 +105,7 @@ export default {
 
   mounted() {
     this.message = "";
-    this.getquestion(this.$route.params.id);
+    this.getQuestion(this.$route.params.id);
   },
 };
 </script>

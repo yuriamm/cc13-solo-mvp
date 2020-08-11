@@ -13,12 +13,12 @@
         />
       </div>
 
-      <button @click="save" class="btn btn-success">Submit</button>
+      <button @click="save" class="btn btn-outline-success">Submit</button>
     </div>
 
     <div v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newQuestion">Add</button>
+      <button class="btn bte-outine-success" @click="newQuestion">Add</button>
     </div>
   </div>
 </template>

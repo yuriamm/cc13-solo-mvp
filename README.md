@@ -1,6 +1,6 @@
 # solo-mvp-project
 
-<img src="acicon-leaf.png" align="right" />
+<img width="200" height="200" src="acicon-leaf.png" align="right" />
 
 This was created during my time as a student at Code Chrysalis.
 

@@ -1,40 +1,45 @@
 <template>
-  <div v-if="currentQuestion" class="edit-form">
-    <h4>Question</h4>
-    <form>
-      <div class="form-group">
-        <label for="question">Question</label>
-        <input type="text" class="form-control" id="question" v-model="currentQuestion.question" />
+  <div>
+    <div v-if="currentQuestion" class="edit-form">
+      <h4>Question</h4>
+      <form>
+        <div class="form-group">
+          <label for="question">Question</label>
+          <input type="text" class="form-control" id="question" v-model="currentQuestion.question" />
+        </div>
+        <div class="form-group">
+          <label for="answer">Answer</label>
+          <input type="text" class="form-control" id="answer" v-model="currentQuestion.answer" />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <strong>Status:</strong>
+          </label>
+          {{ currentQuestion.solved ? "Solved" : "Unsolved" }}
+        </div>
+      </form>
+
+      <button
+        class="btn btn-outline-primary mr-4"
+        v-if="currentQuestion.solved"
+        @click="updateSolved(false)"
+      >UnSolved</button>
+      <button v-else class="btn btn-outline-primary mr-4" @click="updateSolved(true)">Solved?</button>
+
+      <button class="btn btn-outline-danger mr-4" @click="deleteQuestion">Delete</button>
+
+      <button type="submit" class="btn btn-outline-success" @click="update">Update</button>
+
+      <div class="success" v-if="submitted">
+        <p>{{ message }}</p>
       </div>
-      <div class="form-group">
-        <label for="answer">Answer</label>
-        <input type="text" class="form-control" id="answer" v-model="currentQuestion.answer" />
-      </div>
+    </div>
 
-      <div class="form-group">
-        <label>
-          <strong>Status:</strong>
-        </label>
-        {{ currentQuestion.solved ? "Solved" : "Unsolved" }}
-      </div>
-    </form>
-
-    <button
-      class="btn btn-outline-primary mr-4"
-      v-if="currentQuestion.solved"
-      @click="updateSolved(false)"
-    >UnSolved</button>
-    <button v-else class="btn btn-outline-primary mr-4" @click="updateSolved(true)">Solved?</button>
-
-    <button class="btn btn-outline-danger mr-4" @click="deleteQuestion">Delete</button>
-
-    <button type="submit" class="btn btn-outline-success" @click="update">Update</button>
-    <p>{{ message }}</p>
-  </div>
-
-  <div v-else>
-    <br />
-    <p>Click on a question!</p>
+    <div v-if="!currentQuestion">
+      <br />
+      <p>Click on a question!</p>
+    </div>
   </div>
 </template>
 
@@ -47,6 +52,7 @@ export default {
     return {
       currentQuestion: null,
       message: "",
+      submitted: false,
     };
   },
   methods: {
@@ -73,7 +79,10 @@ export default {
         .then((response) => {
           console.log(data);
           this.currentQuestion.solved = status;
-          console.log(response);
+          this.submitted = true;
+          this.message = "Question status changed successfully!";
+          console.log("is that update", response);
+          console.log("submitted", this.submitted);
         })
         .catch((e) => {
           console.log(e);
@@ -84,7 +93,9 @@ export default {
       DataService.update(this.currentQuestion.id, this.currentQuestion)
         .then((response) => {
           console.log(response);
+          this.submitted = true;
           this.message = "Question updated successfully!";
+          console.log("submitted", this.submitted);
         })
         .catch((e) => {
           console.log(e);
@@ -95,6 +106,9 @@ export default {
       DataService.deleteOne(this.currentQuestion.id)
         .then((response) => {
           console.log(response);
+          this.submitted = true;
+          console.log("submitted", this.submitted);
+          this.message = "Question deleted successfully!";
           this.$router.push({ name: "questions" });
         })
         .catch((e) => {

@@ -16,7 +16,7 @@
       <button @click="save" class="btn btn-outline-success">Submit</button>
     </div>
 
-    <div v-else>
+    <div v-if="submitted">
       <h4>You submitted successfully!</h4>
       <button class="btn bte-outine-success" @click="newQuestion">Add</button>
     </div>
@@ -32,7 +32,6 @@ export default {
     return {
       question: {
         title: "",
-        published: false,
       },
       submitted: false,
     };
@@ -47,6 +46,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.submitted = true;
+          console.log("submitted", this.submitted);
         })
         .catch((e) => {
           console.log(e);

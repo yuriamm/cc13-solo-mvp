@@ -50,21 +50,6 @@ app.get("/api/questions/:id", async (req, res) => {
   }
 });
 
-// app.get("/api/questions", async (req, res) => {
-//   try {
-//     const keyword = req.query.keyword;
-//     console.log("this is", keyword);
-//     const questions = await db
-//       .where("question", "like", `%${keyword}%`)
-//       .select()
-//       .table("faqs");
-//     res.json(questions);
-//   } catch (err) {
-//     console.error("Error loading questions!", err);
-//     res.sendStatus(500);
-//   }
-// });
-
 app.post("/add", async (req, res) => {
   try {
     const questions = req.body;
@@ -98,6 +83,7 @@ app.put("/questions/:id", async (req, res) => {
     await db("faqs")
       .where("id", id)
       .update(question);
+    res.json();
   } catch (err) {
     console.error("Error updating questions!", err);
     res.sendStatus(500);

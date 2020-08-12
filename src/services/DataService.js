@@ -1,5 +1,4 @@
 import Axios from "axios";
-// import db from "../../server/db";
 
 class DataService {
   async getAll() {

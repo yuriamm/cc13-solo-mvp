@@ -1,36 +1,42 @@
 <template>
   <div>
     <div v-if="currentQuestion" class="edit-form">
-      <h4>Question</h4>
-      <form>
-        <div class="form-group">
-          <label for="question">Question</label>
-          <input type="text" class="form-control" id="question" v-model="currentQuestion.question" />
-        </div>
-        <div class="form-group">
-          <label for="answer">Answer</label>
-          <input type="text" class="form-control" id="answer" v-model="currentQuestion.answer" />
-        </div>
+      <div v-if="!submitted">
+        <h4>Question</h4>
+        <form>
+          <div class="form-group">
+            <label for="question">Question</label>
+            <input
+              type="text"
+              class="form-control"
+              id="question"
+              v-model="currentQuestion.question"
+            />
+          </div>
+          <div class="form-group">
+            <label for="answer">Answer</label>
+            <input type="text" class="form-control" id="answer" v-model="currentQuestion.answer" />
+          </div>
 
-        <div class="form-group">
-          <label>
-            <strong>Status:</strong>
-          </label>
-          {{ currentQuestion.solved ? "Solved" : "Unsolved" }}
-        </div>
-      </form>
+          <div class="form-group">
+            <label>
+              <strong>Status:</strong>
+            </label>
+            {{ currentQuestion.solved ? "Solved" : "Unsolved" }}
+          </div>
+        </form>
 
-      <button
-        class="btn btn-outline-primary mr-4"
-        v-if="currentQuestion.solved"
-        @click="updateSolved(false)"
-      >UnSolved</button>
-      <button v-else class="btn btn-outline-primary mr-4" @click="updateSolved(true)">Solved?</button>
+        <button
+          class="btn btn-outline-primary mr-4"
+          v-if="currentQuestion.solved"
+          @click="updateSolved(false)"
+        >UnSolved</button>
+        <button v-else class="btn btn-outline-primary mr-4" @click="updateSolved(true)">Solved?</button>
 
-      <button class="btn btn-outline-danger mr-4" @click="deleteQuestion">Delete</button>
+        <button class="btn btn-outline-danger mr-4" @click="deleteQuestion">Delete</button>
 
-      <button type="submit" class="btn btn-outline-success" @click="update">Update</button>
-
+        <button type="submit" class="btn btn-outline-success" @click="update">Update</button>
+      </div>
       <div class="success" v-if="submitted">
         <p>{{ message }}</p>
       </div>
